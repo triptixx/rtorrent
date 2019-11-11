@@ -6,7 +6,7 @@ FROM loxoo/alpine:${ALPINE_TAG} AS builder
 
 ARG LIBTORRENT_VER
 ARG RTORRENT_VER
-ENV PKG_CONFIG_PATH="/libtorrent/lib/pkgconfig"
+ENV PKG_CONFIG_PATH=/libtorrent/lib/pkgconfig
 
 # install xmlrpc-c
 WORKDIR /xmlrpc-src
@@ -50,7 +50,7 @@ FROM loxoo/alpine:${ALPINE_TAG}
 
 ARG RTORRENT_VER
 ENV SUID=911 SGID=911 \
-    LD_LIBRARY_PATH="/xmlrpc/lib" \
+    LD_LIBRARY_PATH=/xmlrpc/lib
 
 LABEL org.label-schema.name="rtorrent" \
       org.label-schema.description="A Docker image for rTorrent BitTorrent client" \
