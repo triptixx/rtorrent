@@ -59,6 +59,8 @@ LABEL org.label-schema.name="rtorrent" \
 
 COPY --from=builder /output/ /
 
+RUN apk add --no-cache ncurses-libs libstdc++ libcurl
+
 VOLUME ["/config", "/session", "/download"]
 
 EXPOSE 51570/TCP
