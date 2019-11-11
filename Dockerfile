@@ -49,8 +49,8 @@ RUN apk add --no-cache ncurses-dev; \
 FROM loxoo/alpine:${ALPINE_TAG}
 
 ARG RTORRENT_VER
-###    export PKG_CONFIG_PATH="/xmlrpc/lib/pkgconfig:/libtorrent/lib/pkgconfig"
-###    export LD_LIBRARY_PATH="/xmlrpc/lib:/libtorrent/lib"
+ENV SUID=911 SGID=911 \
+    LD_LIBRARY_PATH="/xmlrpc/lib" \
 
 LABEL org.label-schema.name="rtorrent" \
       org.label-schema.description="A Docker image for rTorrent BitTorrent client" \
@@ -67,4 +67,4 @@ EXPOSE 51570/TCP
 #    CMD 
 
 ENTRYPOINT ["/sbin/tini", "--", "/usr/local/bin/entrypoint.sh"]
-CMD ["rtorrent"]
+CMD ["/rtorrent/bin/rtorrent"]
