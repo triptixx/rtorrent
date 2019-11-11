@@ -11,7 +11,7 @@ ENV PKG_CONFIG_PATH=/libtorrent/lib/pkgconfig
 # install xmlrpc-c
 WORKDIR /xmlrpc-src
 RUN apk add --no-cache build-base subversion openssl-dev curl-dev; \
-    svn checkout http://svn.code.sf.net/p/xmlrpc-c/code/super_stable/ .; \
+    svn checkout https://svn.code.sf.net/p/xmlrpc-c/code/super_stable/ .; \
     ./configure --prefix=/xmlrpc \
                 --disable-libxml2-backend \
                 --disable-cgi-server \
