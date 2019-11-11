@@ -1,9 +1,56 @@
 ARG ALPINE_TAG=3.10
+ARG LIBTORRENT_VER=0.13.8
 ARG RTORRENT_VER=0.9.8
+
+FROM loxoo/alpine:${ALPINE_TAG} AS builder
+
+ARG LIBTORRENT_VER
+ARG RTORRENT_VER
+ENV PKG_CONFIG_PATH="/libtorrent/lib/pkgconfig"
+
+# install xmlrpc-c
+WORKDIR /xmlrpc-src
+RUN apk add --no-cache build-base subversion openssl-dev curl-dev; \
+    svn checkout http://svn.code.sf.net/p/xmlrpc-c/code/super_stable/ .; \
+    ./configure --prefix=/xmlrpc \
+                --disable-libxml2-backend \
+                --disable-cgi-server \
+                --disable-libwww-client \
+                --disable-wininet-client; \
+    make; \
+    make install DESTDIR=/output
+
+# install libtorrent
+WORKDIR /libtorrent-src
+RUN apk add --no-cache git automake autoconf libtool zlib-dev linux-headers; \
+    git clone https://github.com/rakshasa/libtorrent.git --branch v${LIBTORRENT_VER} --depth 1 .; \
+    ./autogen.sh; \
+    ./configure --prefix=/libtorrent \
+                --disable-debug \
+                --disable-instrumentation; \
+    make; \
+    make install DESTDIR=/output
+
+# install rtorrent
+WORKDIR /rtorrent-src
+RUN apk add --no-cache ncurses-dev; \
+    cp -a /output/* /; \
+    git clone https://github.com/rakshasa/rtorrent.git --branch v${RTORRENT_VER} --depth 1 .; \
+    ./autogen.sh; \
+    ./configure --prefix=/rtorrent \
+                --disable-debug \
+                --with-xmlrpc-c=/xmlrpc/bin/xmlrpc-c-config; \
+    make; \
+    make install DESTDIR=/output; \
+    find /output -exec sh -c 'file "{}" | grep -q ELF && strip --strip-debug "{}"' \;
+
+#=============================================================
 
 FROM loxoo/alpine:${ALPINE_TAG}
 
 ARG RTORRENT_VER
+###    export PKG_CONFIG_PATH="/xmlrpc/lib/pkgconfig:/libtorrent/lib/pkgconfig"
+###    export LD_LIBRARY_PATH="/xmlrpc/lib:/libtorrent/lib"
 
 LABEL org.label-schema.name="rtorrent" \
       org.label-schema.description="A Docker image for rTorrent BitTorrent client" \
@@ -16,8 +63,8 @@ VOLUME ["/config", "/session", "/download"]
 
 EXPOSE 51570/TCP
 
-HEALTHCHECK --start-period=10s --timeout=5s \
-    CMD 
+#HEALTHCHECK --start-period=10s --timeout=5s \
+#    CMD 
 
 ENTRYPOINT ["/sbin/tini", "--", "/usr/local/bin/entrypoint.sh"]
 CMD ["rtorrent"]
