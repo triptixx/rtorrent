@@ -12,7 +12,7 @@ LABEL org.label-schema.name="rtorrent" \
 
 COPY --from=builder /output/ /
 
-VOLUME ["/config", "/acme"]
+VOLUME ["/config", "/session", "/download"]
 
 EXPOSE 51570/TCP
 
