@@ -67,4 +67,4 @@ EXPOSE 51570/TCP
 #    CMD 
 
 ENTRYPOINT ["/sbin/tini", "--", "/usr/local/bin/entrypoint.sh"]
-CMD ["/rtorrent/bin/rtorrent"]
+CMD ["/rtorrent/bin/rtorrent", "-n", "-o", "import=/config/rtorrent.rc"]
