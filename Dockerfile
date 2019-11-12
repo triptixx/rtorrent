@@ -44,6 +44,9 @@ RUN apk add --no-cache ncurses-dev; \
     make install DESTDIR=/output; \
     find /output -exec sh -c 'file "{}" | grep -q ELF && strip --strip-debug "{}"' \;
 
+COPY *.sh /output/usr/local/bin/
+RUN chmod +x /output/usr/local/bin/*.sh
+
 #=============================================================
 
 FROM loxoo/alpine:${ALPINE_TAG}
@@ -63,7 +66,7 @@ RUN apk add --no-cache ncurses-libs libstdc++ libcurl
 
 VOLUME ["/config", "/session", "/download"]
 
-EXPOSE 51570/TCP
+EXPOSE 51570/TCP 51102/TCP
 
 #HEALTHCHECK --start-period=10s --timeout=5s \
 #    CMD 
