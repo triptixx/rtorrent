@@ -64,7 +64,7 @@ COPY --from=builder /output/ /
 
 RUN apk add --no-cache ncurses-libs libstdc++ libcurl
 
-VOLUME ["/config", "/session", "/download"]
+VOLUME ["/config", "/session", "/download", "/watch"]
 
 EXPOSE 51570/TCP 51102/TCP
 
