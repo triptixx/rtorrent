@@ -5,7 +5,7 @@ set -eo pipefail
 RED='\033[0;31m'
 RESET='\033[0m'
 
-CONFIG_DIR='/rundir;/storage;/config;/supercronic'
+CONFIG_DIR='/config;/session;/download;/watch'
 
 for DIR in `echo $CONFIG_DIR | tr ';' '\n'`; do
     if su-exec $SUID:$SGID [ ! -w "$DIR" ]; then
@@ -23,9 +23,6 @@ done
 
 su-exec $SUID:$SGID sh <<EOF
 source /usr/local/bin/gen-config.sh
-if [ \( -n "$ENDPOINT" \) -a \( -n "$APIKEY" \) -a \( -e /supercronic/knot-cron \) ]; then
-    /supercronic/supercronic /supercronic/knot-cron &
-fi
 EOF
 
-exec "$@"
+exec su-exec $SUID:$SGID "$@"
