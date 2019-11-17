@@ -1,0 +1,18 @@
+## Instance layout (base paths)
+method.insert = cfg.download, private|const|string, (cat, "/download")
+method.insert = cfg.session,  private|const|string, (cat, "/session")
+method.insert = cfg.watch,    private|const|string, (cat, "/watch")
+
+## Create base directory
+method.insert = cfg.dirs, private|const|string, (cat, "'leeching;seeding'")
+method.insert = cfg.subdirs, private|const|string, (cat, "'apps;books;games;movies;music;other;tv'")
+
+execute.throw = sh, -c, (cat, "for DIR in `echo ", (cfg.dirs), " | tr ';' '\\n'`; do ", \
+        "for SUBDIR in `echo ", (cfg.subdirs), " | tr ';' '\\n'`; do ", \
+            "mkdir -p ", (cfg.download), "/$DIR/$SUBDIR; ", \
+        "done; ", \
+    "done")
+
+execute.throw = sh, -c, (cat, "for SUBDIR in `echo ", (cfg.subdirs), " | tr ';' '\\n'`; do ", \
+        "mkdir -p ", (cfg.watch), "/$SUBDIR; ", \
+    "done")
