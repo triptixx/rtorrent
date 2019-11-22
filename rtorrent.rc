@@ -23,23 +23,24 @@ session.path.set      = (cat, (cfg.session))
 directory.default.set = (cat, (cfg.download), "/leeching")
 
 ## global function
-method.insert = func.label, simple|private, "execute.capture = sh, -c, \                                                                                                      
-    (cat, \"echo -n '\", (argument.0), \"' | sed 's|\", (argument.1), \"/\\\\([^/]\\\\+\\\\).*|\\\\1|'\")"                                                          
-method.insert = func.dir,   simple|private, "execute.capture = sh, -c, \                                                                                            
+method.insert = func.label, simple|private, "execute.capture = sh, -c, \
+    (cat, \"echo -n '\", (argument.0), \"' | sed 's|\", (argument.1), \"/\\\\([^/]\\\\+\\\\).*|\\\\1|'\")"
+method.insert = func.dir,   simple|private, "execute.capture = sh, -c, \
     (cat, \"echo -n '\", (argument.0), \"' | sed 's|\\\\(.*\\\\)/\", (argument.1), \"|\\\\1|'\")"
-                                                                                                                                                                                            
-## watch configuration                                                                                                                                                                      
-method.insert = file.load, simple|private, "load.start_verbose = (argument.0), (cat, d.directory.set=, (directory.default), \"/\", (func.label, (argument.0), (cfg.watch))), d.delete_tied="
-#method.insert = file.load, simple|private, "load.start_verbose = (argument.0), (cat, d.directory.set=, (directory.default)), d.delete_tied="
-                                                                
-directory.watch.added = (cat, (cfg.watch), "/apps/"), file.load 
-directory.watch.added = (cat, (cfg.watch), "/books/"), file.load 
-directory.watch.added = (cat, (cfg.watch), "/games/"), file.load 
+
+## watch configuration
+method.insert = file.load, simple|private, "load.start_verbose = (argument.0), \
+    (cat, d.directory.set=, (directory.default), \"/\", (func.label, (argument.0), (cfg.watch))), d.delete_tied="
+
+directory.watch.added = (cat, (cfg.watch), "/apps/"), file.load
+directory.watch.added = (cat, (cfg.watch), "/books/"), file.load
+directory.watch.added = (cat, (cfg.watch), "/games/"), file.load
 directory.watch.added = (cat, (cfg.watch), "/movies/"), file.load
 directory.watch.added = (cat, (cfg.watch), "/music/"), file.load
 directory.watch.added = (cat, (cfg.watch), "/other/"), file.load
 directory.watch.added = (cat, (cfg.watch), "/tv/"), file.load
-                                                             
-## process add                                                                                                                                                                                                                  
-method.insert  = d.supp, simple|private, "d.close=; d.erase="                                                                                                                                                                   
-method.set_key = event.download.inserted_new, label.add, "branch = ((equal, ((directory.default)), ((func.dir, (d.directory), (d.name))))), ((d.supp)), (cat, d.custom1.set=, (func.label, (d.directory), (directory.default)))"
+
+## process add
+method.insert  = d.supp, simple|private, "d.close=; d.erase="
+method.set_key = event.download.inserted_new, label.add, "branch = ((equal, ((directory.default)), \
+    ((func.dir, (d.directory), (d.name))))), ((d.supp)), (cat, d.custom1.set=, (func.label, (d.directory), (directory.default)))"
