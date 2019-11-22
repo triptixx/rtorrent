@@ -22,22 +22,24 @@ encoding.add          = UTF-8
 session.path.set      = (cat, (cfg.session))
 directory.default.set = (cat, (cfg.download), "/leeching")
 
-## watch configuration
-method.insert = load.file, simple|private, "load.start_verbose= (argument.0), (cat, d.directory.set=, (directory.default)), d.delete_tied="
-#method.insert = load.file, string|private, (branch, (equal, ((cat, "TEST")), ((cat, "TEST"))), ((print, "egale")), ((print, "not egale")))
-
-directory.watch.added = (cat, (cfg.watch), "/apps/"), load.file
-directory.watch.added = (cat, (cfg.watch), "/books/"), load.file
-directory.watch.added = (cat, (cfg.watch), "/games/"), load.file
-directory.watch.added = (cat, (cfg.watch), "/movies/"), load.file
-directory.watch.added = (cat, (cfg.watch), "/music/"), load.file
-directory.watch.added = (cat, (cfg.watch), "/other/"), load.file
-directory.watch.added = (cat, (cfg.watch), "/tv/"), load.file
-
-
-method.insert = func.dir, simple|private, "execute.capture= sh, -c, (cat, \"echo -n '\", (argument.0), \"' | sed 's|\\\\(.*\\\\)/\", (argument.1), \"|\\\\1|'\")"
-method.insert = label.test, simple|private, "func.dir= (d.directory), (d.name)"
-#method.set_key = event.download.inserted_new, label.add, ((print, ((func.dir, ((d.directory)), ((d.name))))))
-#method.set_key = event.download.inserted_new, label.add, ((print, ((directory.default)), ((label.test))))
-#method.set_key = event.download.inserted_new, label.add, ((branch, ((equal, (directory.default), ((label.test)))), (print, "egale"), (print, "not egale")))
-method.set_key = event.download.inserted_new, label.add, "branch= ((equal, ((directory.default)), ((label.test)))), ((print, \"egale\")), ((print, \"|\", (directory.default), \"|\", (label.test), \"|\"))"
+## global function
+method.insert = func.label, simple|private, "execute.capture = sh, -c, \                                                                                                      
+    (cat, \"echo -n '\", (argument.0), \"' | sed 's|\", (argument.1), \"/\\\\([^/]\\\\+\\\\).*|\\\\1|'\")"                                                          
+method.insert = func.dir,   simple|private, "execute.capture = sh, -c, \                                                                                            
+    (cat, \"echo -n '\", (argument.0), \"' | sed 's|\\\\(.*\\\\)/\", (argument.1), \"|\\\\1|'\")"
+                                                                                                                                                                                            
+## watch configuration                                                                                                                                                                      
+method.insert = file.load, simple|private, "load.start_verbose = (argument.0), (cat, d.directory.set=, (directory.default), \"/\", (func.label, (argument.0), (cfg.watch))), d.delete_tied="
+#method.insert = file.load, simple|private, "load.start_verbose = (argument.0), (cat, d.directory.set=, (directory.default)), d.delete_tied="
+                                                                
+directory.watch.added = (cat, (cfg.watch), "/apps/"), file.load 
+directory.watch.added = (cat, (cfg.watch), "/books/"), file.load 
+directory.watch.added = (cat, (cfg.watch), "/games/"), file.load 
+directory.watch.added = (cat, (cfg.watch), "/movies/"), file.load
+directory.watch.added = (cat, (cfg.watch), "/music/"), file.load
+directory.watch.added = (cat, (cfg.watch), "/other/"), file.load
+directory.watch.added = (cat, (cfg.watch), "/tv/"), file.load
+                                                             
+## process add                                                                                                                                                                                                                  
+method.insert  = d.supp, simple|private, "d.close=; d.erase="                                                                                                                                                                   
+method.set_key = event.download.inserted_new, label.add, "branch = ((equal, ((directory.default)), ((func.dir, (d.directory), (d.name))))), ((d.supp)), (cat, d.custom1.set=, (func.label, (d.directory), (directory.default)))"
