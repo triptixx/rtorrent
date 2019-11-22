@@ -43,4 +43,5 @@ directory.watch.added = (cat, (cfg.watch), "/tv/"), file.load
 ## process add
 method.insert  = d.supp, simple|private, "d.close=; d.erase="
 method.set_key = event.download.inserted_new, label.add, "branch = ((equal, ((directory.default)), \
-    ((func.dir, (d.directory), (d.name))))), ((d.supp)), (cat, d.custom1.set=, (func.label, (d.directory), (directory.default)))"
+    ((func.dir, (d.directory), (d.name))))), ((d.supp)), (cat, d.custom1.set=, (func.label, (d.directory), \
+    (directory.default)))"
