@@ -31,8 +31,8 @@ method.insert = d.dir_name,   simple|private, "execute.capture = sh, -c, \
 ## watch configuration
 method.insert = d.get_start_update, simple|private, "cat = (directory.default), \"/\", (d.label_name, (argument.0), \
     (cfg.watch))"
-method.insert = d.file_load, simple|private, "load.start_verbose = (argument.0), (cat, d.directory.set=, (d.get_start_update, \
-    (argument.0))), d.delete_tied="
+method.insert = d.file_load, simple|private, "load.start_verbose = (argument.0), (cat, d.directory.set=, \
+    (d.get_start_update, (argument.0))), d.delete_tied="
 
 directory.watch.added = (cat, (cfg.watch), "/apps/"), d.file_load
 directory.watch.added = (cat, (cfg.watch), "/books/"), d.file_load
@@ -54,7 +54,7 @@ method.insert  = d.get_move_leech, simple|private, "cat = (directory.default), \
 method.insert  = d.get_move_seed, simple|private, "cat = (cfg.download), \"/seeding/\", (argument.0)"
 method.insert  = d.move_mkdir, simple|private, "execute.throw = sh, -c, (cat, \"mkdir -p \", (d.get_move_seed, \
     (argument.0)))"
-method.insert  = d.move_mv, simple|private, "execute.throw = sh, -c, (cat, \"mv \", (d.get_move_leech, (argument.0)), \"/\", \
-    (argument.1), \" \", (d.get_move_seed, (argument.0)))"
-method.set_key = event.download.finished, d.move_complete, "d.directory.set = (d.get_move_seed, (d.custom1)); d.move_mkdir = \
-    (d.custom1); d.move_mv = (d.custom1), (d.name)"
+method.insert  = d.move_mv, simple|private, "execute.throw = sh, -c, (cat, \"mv \", (d.get_move_leech, (argument.0)), \
+    \"/\", (argument.1), \" \", (d.get_move_seed, (argument.0)))"
+method.set_key = event.download.finished, d.move_complete, "d.directory.set = (d.get_move_seed, (d.custom1)); \
+    d.move_mkdir = (d.custom1); d.move_mv = (d.custom1), (d.name)"
