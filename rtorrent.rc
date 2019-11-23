@@ -27,19 +27,20 @@ method.insert = d.label_name, simple|private, "execute.capture = sh, -c, \
     (cat, \"echo -n '\", (argument.0), \"' | sed 's|\", (argument.1), \"/\\\\([^/]\\\\+\\\\).*|\\\\1|'\")"
 method.insert = d.dir_name,   simple|private, "execute.capture = sh, -c, \
     (cat, \"echo -n '\", (argument.0), \"' | sed 's|\\\\(.*\\\\)/\", (argument.1), \"|\\\\1|'\")"
-method.insert = d.dir_update, simple|private, "d.directory.set = (argument.0)"
 
 ## watch configuration
-method.insert = d.file_load, simple|private, "load.start_verbose = (argument.0), (cat, d.dir_update=, \
-    (directory.default), \"/\", (d.label_name, (argument.0), (cfg.watch))), d.delete_tied="
+method.insert = d.get_start_update, simple|private, "cat = (directory.default), \"/\", (d.label_name, (argument.0), \
+    (cfg.watch))"
+method.insert = d.file_load, simple|private, "load.start_verbose = (argument.0), (cat, d.directory.set=, (d.get_start_update, \
+    (argument.0))), d.delete_tied="
 
 directory.watch.added = (cat, (cfg.watch), "/apps/"), d.file_load
 directory.watch.added = (cat, (cfg.watch), "/books/"), d.file_load
 directory.watch.added = (cat, (cfg.watch), "/games/"), d.file_load
 directory.watch.added = (cat, (cfg.watch), "/movies/"), d.file_load
-directory.watch.added = (cat, (cfg.watch), "/music/"), d.file_load 
-directory.watch.added = (cat, (cfg.watch), "/other/"), d.file_load 
-directory.watch.added = (cat, (cfg.watch), "/tv/"), d.file_load   
+directory.watch.added = (cat, (cfg.watch), "/music/"), d.file_load
+directory.watch.added = (cat, (cfg.watch), "/other/"), d.file_load
+directory.watch.added = (cat, (cfg.watch), "/tv/"), d.file_load
 
 ## process add
 method.insert  = d.dir_erase, simple|private, "d.close=; d.erase="
@@ -49,5 +50,11 @@ method.set_key = event.download.inserted_new, d.label_add, "branch = ((equal, ((
     ((d.dir_name, (d.directory), (d.name))))), ((d.dir_erase)), (d.custom1_update)"
 
 ## process finish
-#method.insert  = d.update_dir, simple|private, "d.directory.set = (cat, (cfg.download), \"/seeding/\", (d.custom1))"
-#method.set_key = event.download.finished, d.move_complete, "d.update_dir"
+method.insert  = d.get_move_leech, simple|private, "cat = (directory.default), \"/\", (argument.0)"
+method.insert  = d.get_move_seed, simple|private, "cat = (cfg.download), \"/seeding/\", (argument.0)"
+method.insert  = d.move_mkdir, simple|private, "execute.throw = sh, -c, (cat, \"mkdir -p \", (d.get_move_seed, \
+    (argument.0)))"
+method.insert  = d.move_mv, simple|private, "execute.throw = sh, -c, (cat, \"mv \", (d.get_move_leech, (argument.0)), \"/\", \
+    (argument.1), \" \", (d.get_move_seed, (argument.0)))"
+method.set_key = event.download.finished, d.move_complete, "d.directory.set = (d.get_move_seed, (d.custom1)); d.move_mkdir = \
+    (d.custom1); d.move_mv = (d.custom1), (d.name)"
