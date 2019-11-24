@@ -34,7 +34,7 @@ docker run -d \
 
 - `$SUID`                - User ID to run as. _default: `911`_
 - `$SGID`                - Group ID to run as. _default: `911`_
-- `$RTORRENT_PORT`       - Domain master zone. _default: `51570`_
+- `$RTORRENT_PORT`       - . _default: `51570`_
 - `$LOG_LEVEL`           - Logging severity levels. _default: `info`_
 - `$TZ`                  - Timezone. _optional_
 
