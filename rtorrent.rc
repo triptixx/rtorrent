@@ -124,4 +124,3 @@ schedule2 = session_save, 1200, 43200, ((session.save))
 method.insert = cfg.logfile, string|private|const, (cat, "/dev/stdout")
 log.open_file = "log", (cfg.logfile)
 log.add_output = "info", "log"
-log.add_output = "torrent_info", "log"
