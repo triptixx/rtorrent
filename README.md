@@ -1,13 +1,3 @@
-# rtorrent
-A Docker image for rTorrent BitTorrent client
-
-arg :
-$RTORRENT_PORT
-$SUID - User ID to run as. default: 911
-$SGID - Group ID to run as. default: 911
-$LOG_LEVEL - Logging severity levels. default: info
-$TZ - Timezone. optional
-
 #EN COURS DE DEV
 
 
@@ -42,8 +32,8 @@ docker run -d \
 
 ## Environment
 
-- `$SUID`                - User ID to run as. _default: `901`_
-- `$SGID`                - Group ID to run as. _default: `901`_
+- `$SUID`                - User ID to run as. _default: `911`_
+- `$SGID`                - Group ID to run as. _default: `911`_
 - `$RTORRENT_PORT`       - Domain master zone. _default: `51570`_
 - `$LOG_LEVEL`           - Logging severity levels. _default: `info`_
 - `$TZ`                  - Timezone. _optional_
