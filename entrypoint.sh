@@ -21,8 +21,4 @@ for DIR in `echo $CONFIG_DIR | tr ';' '\n'`; do
     fi
 done
 
-su-exec $SUID:$SGID sh <<EOF
-source /usr/local/bin/gen-config.sh
-EOF
-
 exec su-exec $SUID:$SGID "$@"
