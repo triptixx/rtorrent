@@ -15,6 +15,12 @@ if [ ! -e /config/*.rc ]; then
         error "Unable to download file $(basename $CONF_RTORRENT)"
     fi
 
-    
+    if [ -n "$RTORRENT_PORT" ]
+        sed -i "s/^\(network\.port_range\.set[[:blank:]]*\)=.*/\1= ${RTORRENT_PORT}-${RTORRENT_PORT}/g" $CONF_RTORRENT
+    fi
+
+    if [ -n "$LOG_LEVEL" ]
+        sed -i "^\(log\.add_output[[:blank:]]*=[[:blank:]]*\"\).*\(\",.*\)/\1${LOG_LEVEL}\2/g" $CONF_RTORRENT
+    fi
 
 fi
