@@ -22,7 +22,6 @@ session.use_lock.set  = no
 session.path.set      = (cat, (cfg.session))
 directory.default.set = (cat, (cfg.download), "/leeching")
 system.daemon.set     = true
-system.cwd.set        = (directory.default)
 execute.nothrow       = sh, -c, (cat, "echo > ", (session.path), "/rtorrent.pid ", (system.pid))
 
 ## Listening port for incoming peer traffic
