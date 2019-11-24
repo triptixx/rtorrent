@@ -34,18 +34,18 @@ docker run -d \
 
 - `$SUID`                - User ID to run as. _default: `911`_
 - `$SGID`                - Group ID to run as. _default: `911`_
-- `$RTORRENT_PORT`       - . _default: `51570`_
+- `$RTORRENT_PORT`       - Listening port for incoming peer traffic. _default: `51570`_
 - `$LOG_LEVEL`           - Logging severity levels. _default: `info`_
 - `$TZ`                  - Timezone. _optional_
 
 ## Volume
 
-- `/session`             - 
-- `/watch`               - 
-- `/download`            -
+- `/session`             - Torrent files and status information for all open downloads will be stored in this directory.
+- `/watch`               - Load torrent files dropped into special folders.
+- `/download`            - Directory where downloaded and downloading files are stored.
 - `/config`              - Server configuration file location.
 
 ## Network
 
-- `51570/tcp`            -
-- `51102/tcp`            -
+- `51570/tcp`            - Listening port for incoming peer traffic.
+- `51102/tcp`            - Port is used by the XMLRPC socket.
