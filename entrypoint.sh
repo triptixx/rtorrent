@@ -25,6 +25,12 @@ su-exec $SUID:$SGID sh <<EOF
 
 source /usr/local/bin/gen-config.sh
 
+mkfifo -m 600 /config/rtorrent.log
+cat <> logpipe 1>&2 &
+CAT=$!
+
 EOF
 
 exec su-exec $SUID:$SGID "$@"
+
+kill $CAT
