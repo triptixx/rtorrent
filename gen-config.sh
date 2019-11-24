@@ -130,9 +130,9 @@ schedule2 = session_save, 1200, 43200, ((session.save))
 
 ## Logging:
 ##   Levels = critical error warn notice info debug
-method.insert  = cfg.logfile, string|private|const, (cat, "/dev/stdout")
-log.open_file  = "log", (cfg.logfile)
-log.add_output = "${LOG_LEVEL:-info}", "log"
+#method.insert  = cfg.logfile, string|private|const, (cat, "/dev/stdout")
+#log.open_file  = "log", (cfg.logfile)
+#log.add_output = "${LOG_LEVEL:-info}", "log"
 
 EOL
 
