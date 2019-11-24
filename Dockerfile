@@ -54,6 +54,7 @@ FROM loxoo/alpine:${ALPINE_TAG}
 
 ARG RTORRENT_VER
 ENV SUID=911 SGID=911 \
+    RTORRENT_PORT=51570 \
     LD_LIBRARY_PATH=/xmlrpc/lib
 
 LABEL org.label-schema.name="rtorrent" \
@@ -69,8 +70,8 @@ VOLUME ["/config", "/session", "/download", "/watch"]
 
 EXPOSE 51570/TCP 51102/TCP
 
-#HEALTHCHECK --start-period=10s --timeout=5s \
-#    CMD 
+HEALTHCHECK --start-period=10s --timeout=5s \
+    CMD wget --spider --tries=1 -q http://localhost:$RTORRENT_PORT
 
 ENTRYPOINT ["/sbin/tini", "--", "/usr/local/bin/entrypoint.sh"]
 CMD ["/rtorrent/bin/rtorrent", "-n", "-o", "import=/config/rtorrent.rc"]
