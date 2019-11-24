@@ -73,26 +73,26 @@ network.http.dns_cache_timeout.set = 25
 method.insert = dirs,    string|private|const, (cat, "'leeching;seeding'")
 method.insert = subdirs, string|private|const, (cat, "'apps;books;games;movies;music;other;tv'")
 
-execute.throw = sh, -c, (cat, "for DIR in `echo ", (dirs), " | tr ';' '\\n'`; do ", \
-        "for SUBDIR in `echo ", (subdirs), " | tr ';' '\\n'`; do ", \
-            "mkdir -p ", (cfg.download), "/$DIR/$SUBDIR; ", \
-        "done; ", \
+execute.throw = sh, -c, (cat, "for DIR in `echo ", (dirs), " | tr ';' '\\n'`; do ", \\
+        "for SUBDIR in `echo ", (subdirs), " | tr ';' '\\n'`; do ", \\
+            "mkdir -p ", (cfg.download), "/$DIR/$SUBDIR; ", \\
+        "done; ", \\
     "done")
 
-execute.throw = sh, -c, (cat, "for SUBDIR in `echo ", (subdirs), " | tr ';' '\\n'`; do ", \
-        "mkdir -p ", (cfg.watch), "/$SUBDIR; ", \
+execute.throw = sh, -c, (cat, "for SUBDIR in `echo ", (subdirs), " | tr ';' '\\n'`; do ", \\
+        "mkdir -p ", (cfg.watch), "/$SUBDIR; ", \\
     "done")
 
 ## global methode
-method.insert = d.label_name, simple|private, "execute.capture = sh, -c, \
+method.insert = d.label_name, simple|private, "execute.capture = sh, -c, \\
     (cat, \"echo -n '\", (argument.0), \"' | sed 's|\", (argument.1), \"/\\\\([^/]\\\\+\\\\).*|\\\\1|'\")"
-method.insert = d.dir_name,   simple|private, "execute.capture = sh, -c, \
+method.insert = d.dir_name,   simple|private, "execute.capture = sh, -c, \\
     (cat, \"echo -n '\", (argument.0), \"' | sed 's|\\\\(.*\\\\)/\", (argument.1), \"|\\\\1|'\")"
 
 ## watch configuration
-method.insert = d.get_start_update, simple|private, "cat = (directory.default), \"/\", (d.label_name, (argument.0), \
+method.insert = d.get_start_update, simple|private, "cat = (directory.default), \"/\", (d.label_name, (argument.0), \\
     (cfg.watch))"
-method.insert = d.file_load, simple|private, "load.start_verbose = (argument.0), (cat, d.directory.set=, \
+method.insert = d.file_load, simple|private, "load.start_verbose = (argument.0), (cat, d.directory.set=, \\
     (d.get_start_update, (argument.0))), d.delete_tied="
 
 directory.watch.added = (cat, (cfg.watch), "/apps/"), d.file_load
@@ -105,19 +105,19 @@ directory.watch.added = (cat, (cfg.watch), "/tv/"), d.file_load
 
 ## process add
 method.insert  = d.dir_erase, simple|private, "d.close=; d.erase="
-method.insert  = d.custom1_update, simple|private, "cat = d.custom1.set=, (d.label_name, (d.directory), \
+method.insert  = d.custom1_update, simple|private, "cat = d.custom1.set=, (d.label_name, (d.directory), \\
     (directory.default))"
-method.set_key = event.download.inserted_new, d.label_add, "branch = ((equal, ((directory.default)), \
+method.set_key = event.download.inserted_new, d.label_add, "branch = ((equal, ((directory.default)), \\
     ((d.dir_name, (d.directory), (d.name))))), ((d.dir_erase)), (d.custom1_update)"
 
 ## process finish
 method.insert  = d.get_move_leech, simple|private, "cat = (directory.default), \"/\", (argument.0)"
 method.insert  = d.get_move_seed, simple|private, "cat = (cfg.download), \"/seeding/\", (argument.0)"
-method.insert  = d.move_mkdir, simple|private, "execute.throw = sh, -c, (cat, \"mkdir -p \", (d.get_move_seed, \
+method.insert  = d.move_mkdir, simple|private, "execute.throw = sh, -c, (cat, \"mkdir -p \", (d.get_move_seed, \\
     (argument.0)))"
-method.insert  = d.move_mv, simple|private, "execute.throw = sh, -c, (cat, \"mv \", (d.get_move_leech, (argument.0)), \
+method.insert  = d.move_mv, simple|private, "execute.throw = sh, -c, (cat, \"mv \", (d.get_move_leech, (argument.0)), \\
     \"/\", (argument.1), \" \", (d.get_move_seed, (argument.0)))"
-method.set_key = event.download.finished, d.move_complete, "d.directory.set = (d.get_move_seed, (d.custom1)); \
+method.set_key = event.download.finished, d.move_complete, "d.directory.set = (d.get_move_seed, (d.custom1)); \\
     d.move_mkdir = (d.custom1); d.move_mv = (d.custom1), (d.name)"
 
 # Save all the sessions in every 12 hours
