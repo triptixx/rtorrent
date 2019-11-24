@@ -1,3 +1,6 @@
+### Fundamentals ############################################################
+#                                                              vim: ft=dosini
+
 ## Instance layout (base paths)
 method.insert = cfg.download, string|private|const, (cat, "/download")
 method.insert = cfg.session,  string|private|const, (cat, "/session")
