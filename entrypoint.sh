@@ -6,6 +6,7 @@ RED='\033[0;31m'
 RESET='\033[0m'
 
 CONFIG_DIR='/config;/session;/download;/watch'
+LOG_PIPE='/config/rtorrent.log'
 
 for DIR in `echo $CONFIG_DIR | tr ';' '\n'`; do
     if su-exec $SUID:$SGID [ ! -w "$DIR" ]; then
@@ -25,12 +26,11 @@ su-exec $SUID:$SGID sh <<EOF
 
 source /usr/local/bin/gen-config.sh
 
-mkfifo -m 600 /config/rtorrent.log
+EOF
+
+mkfifo -m 600 $LOG_PIPE
+chown $SUID:$SGID $LOG_PIPE
 cat <> logpipe 1>&2 &
 CAT=$!
 
-EOF
-
 exec su-exec $SUID:$SGID "$@"
-
-kill $CAT
