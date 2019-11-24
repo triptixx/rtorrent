@@ -44,7 +44,7 @@ RUN apk add --no-cache ncurses-dev; \
     make install DESTDIR=/output; \
     find /output -exec sh -c 'file "{}" | grep -q ELF && strip --strip-debug "{}"' \;
 
-COPY *.rc /output/config/
+COPY *.rc /output/rtorrent/
 COPY *.sh /output/usr/local/bin/
 RUN chmod +x /output/usr/local/bin/*.sh
 
