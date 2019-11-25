@@ -30,7 +30,6 @@ EOF
 
 mkfifo -m 600 $LOG_PIPE
 chown $SUID:$SGID $LOG_PIPE
-cat <> $LOG_PIPE 1>&2 &
-CAT=$!
+su-exec $SUID:$SGID cat <> $LOG_PIPE 1>&2 &
 
 exec su-exec $SUID:$SGID "$@"
