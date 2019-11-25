@@ -70,7 +70,7 @@ VOLUME ["/config", "/session", "/download", "/watch"]
 EXPOSE 51570/TCP 51102/TCP
 
 HEALTHCHECK --start-period=10s --timeout=5s \
-    CMD wget --spider --tries=1 -q http://localhost:$RTORRENT_PORT
+    CMD nc -z localhost $RTORRENT_PORT
 
 ENTRYPOINT ["/sbin/tini", "--", "/usr/local/bin/entrypoint.sh"]
 CMD ["/rtorrent/bin/rtorrent", "-n", "-o", "import=/config/rtorrent.rc"]
