@@ -1,6 +1,3 @@
-#EN COURS DE DEV
-
-
 [hub]: https://hub.docker.com/r/loxoo/rtorrent
 [mbdg]: https://microbadger.com/images/loxoo/rtorrent
 [git]: https://github.com/triptixx/rtorrent
