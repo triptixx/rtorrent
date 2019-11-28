@@ -20,7 +20,7 @@ jobs:
         with:
           verbose: true
           repo: rtorrent-dev
-          exec_pre: nc -z 127.0.0.1 51570
+          exec_pre: nc -z 127.0.0.1 51578
       - name: publish
         uses: triptixx/action-docker-publish@master
         with:
