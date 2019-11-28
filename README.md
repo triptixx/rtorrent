@@ -31,7 +31,7 @@ docker run -d \
 
 - `$SUID`                - User ID to run as. _default: `911`_
 - `$SGID`                - Group ID to run as. _default: `911`_
-- `$RTORRENT_PORT`       - Listening port for incoming peer traffic. _default: `51570`_
+- `$RTORRENT_PORT`       - Listening port for incoming peer traffic. _default: `51578`_
 - `$LOG_LEVEL`           - Logging severity levels. _default: `info`_
 - `$TZ`                  - Timezone. _optional_
 

@@ -53,7 +53,7 @@ FROM loxoo/alpine:${ALPINE_TAG}
 
 ARG RTORRENT_VER
 ENV SUID=911 SGID=911 \
-    RTORRENT_PORT=51570 \
+    RTORRENT_PORT=51578 \
     LD_LIBRARY_PATH=/xmlrpc/lib
 
 LABEL org.label-schema.name="rtorrent" \
@@ -67,7 +67,7 @@ RUN apk add --no-cache ncurses-libs libstdc++ libcurl
 
 VOLUME ["/config", "/session", "/download", "/watch"]
 
-EXPOSE 51570/TCP 51102/TCP
+EXPOSE 51578/TCP 51102/TCP
 
 HEALTHCHECK --start-period=10s --timeout=5s \
     CMD nc -z localhost $RTORRENT_PORT
