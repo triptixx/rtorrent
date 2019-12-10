@@ -28,6 +28,7 @@ source /usr/local/bin/gen-config.sh
 
 EOF
 
+rm -f $LOG_PIPE
 mkfifo -m 600 $LOG_PIPE
 chown $SUID:$SGID $LOG_PIPE
 su-exec $SUID:$SGID cat <> $LOG_PIPE 1>&2 &
