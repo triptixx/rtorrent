@@ -80,11 +80,13 @@ method.insert = subdirs, string|private|const, (cat, "'apps;books;games;movies;m
 execute.throw = sh, -c, (cat, "for DIR in \`echo ", (dirs), " | tr ';' '\\\n'\`; do ", \\
         "for SUBDIR in \`echo ", (subdirs), " | tr ';' '\\\n'\`; do ", \\
             "mkdir -p ", (cfg.download), "/\$DIR/\$SUBDIR; ", \\
+            "chmod g+w ", (cfg.download), "/\$DIR/\$SUBDIR; ", \\
         "done; ", \\
     "done")
 
 execute.throw = sh, -c, (cat, "for SUBDIR in \`echo ", (subdirs), " | tr ';' '\\\n'\`; do ", \\
         "mkdir -p ", (cfg.watch), "/\$SUBDIR; ", \\
+        "chmod g+w ", (cfg.watch), "/\$SUBDIR; ", \\
     "done")
 
 ## global methode

@@ -52,7 +52,7 @@ RUN chmod +x /output/usr/local/bin/*.sh
 FROM loxoo/alpine:${ALPINE_TAG}
 
 ARG RTORRENT_VER
-ENV SUID=911 SGID=911 \
+ENV SUID=911 SGID=900 \
     RTORRENT_PORT=51578 \
     LD_LIBRARY_PATH=/xmlrpc/lib
 
