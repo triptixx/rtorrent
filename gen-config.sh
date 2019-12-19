@@ -113,8 +113,10 @@ directory.watch.added = (cat, (cfg.watch), "/tv/"), d.file_load
 method.insert  = d.dir_erase, simple|private, "d.close=; d.erase="
 method.insert  = d.custom1_update, simple|private, "cat = d.custom1.set=, (d.label_name, (d.directory), \\
     (directory.default))"
+method.insert  = d.custom_addtime, simple|private, "d.custom.set = addtime, (cat, (system.time))"
 method.set_key = event.download.inserted_new, d.label_add, "branch = ((equal, ((directory.default)), \\
-    ((d.dir_name, (d.directory), (d.name))))), ((d.dir_erase)), (d.custom1_update)"
+    ((d.dir_name, (d.directory), (d.name))))), ((d.dir_erase)), (d.custom1_update); d.custom_addtime=; \\
+    d.save_resume="
 
 ## process finish
 method.insert  = d.get_move_leech, simple|private, "cat = (directory.default), \"/\", (argument.0)"
