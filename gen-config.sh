@@ -127,6 +127,9 @@ method.insert  = d.move_mv, simple|private, "execute.throw = sh, -c, (cat, \"mv 
 method.set_key = event.download.finished, d.move_complete, "d.directory.set = (d.get_move_seed, (d.custom1)); \\
     d.move_mkdir = (d.custom1); d.move_mv = (d.custom1), (d.name)"
 
+## process erase
+method.set_key = event.download.erased, delete_erased, "execute.throw = rm, -rf, --, d.data_path="
+
 # Save all the sessions in every 12 hours
 schedule2 = monitor_diskspace, 15, 60, ((close_low_diskspace, 1000M))
 schedule2 = session_save, 1200, 43200, ((session.save))
