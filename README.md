@@ -44,5 +44,5 @@ docker run -d \
 
 ## Network
 
-- `51570/tcp`            - Listening port for incoming peer traffic.
+- `51578/tcp`            - Listening port for incoming peer traffic.
 - `51102/tcp`            - Port is used by the XMLRPC socket.
