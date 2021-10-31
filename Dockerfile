@@ -5,6 +5,7 @@ ARG RTORRENT_VER=0.9.8
 
 FROM loxoo/alpine:${ALPINE_TAG} AS builder
 
+ARG XMLRPC_VER
 ARG LIBTORRENT_VER
 ARG RTORRENT_VER
 ENV PKG_CONFIG_PATH=/libtorrent/lib/pkgconfig
