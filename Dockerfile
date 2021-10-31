@@ -1,4 +1,5 @@
 ARG ALPINE_TAG=3.14
+ARG XMLRPC_VER=1.51.08
 ARG LIBTORRENT_VER=0.13.8
 ARG RTORRENT_VER=0.9.8
 
@@ -10,8 +11,9 @@ ENV PKG_CONFIG_PATH=/libtorrent/lib/pkgconfig
 
 # install xmlrpc-c
 WORKDIR /xmlrpc-src
-RUN apk add --no-cache build-base subversion openssl-dev curl-dev; \
-    svn checkout https://svn.code.sf.net/p/xmlrpc-c/code/super_stable/ .; \
+RUN apk add --no-cache build-base openssl-dev curl-dev; \
+    wget -O- https://sourceforge.net/projects/xmlrpc-c/files/Xmlrpc-c%20Super%20Stable/${XMLRPC_VER}/xmlrpc-${XMLRPC_VER}.tgz \
+        | tar xz --strip-components=1; \
     ./configure --prefix=/xmlrpc \
                 --disable-libxml2-backend \
                 --disable-cgi-server \
