@@ -13,7 +13,7 @@ ENV PKG_CONFIG_PATH=/libtorrent/lib/pkgconfig
 # install xmlrpc-c
 WORKDIR /xmlrpc-src
 RUN apk add --no-cache build-base openssl-dev curl-dev; \
-    wget -O- https://sourceforge.net/projects/xmlrpc-c/files/Xmlrpc-c%20Super%20Stable/${XMLRPC_VER}/xmlrpc-${XMLRPC_VER}.tgz \
+    wget -O- https://sourceforge.net/projects/xmlrpc-c/files/Xmlrpc-c%20Super%20Stable/${XMLRPC_VER}/xmlrpc-c-${XMLRPC_VER}.tgz \
         | tar xz --strip-components=1; \
     ./configure --prefix=/xmlrpc \
                 --disable-libxml2-backend \
