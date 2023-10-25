@@ -1,15 +1,14 @@
 [hub]: https://hub.docker.com/r/loxoo/rtorrent
-[mbdg]: https://microbadger.com/images/loxoo/rtorrent
-[git]: https://github.com/triptixx/rtorrent
-[actions]: https://github.com/triptixx/rtorrent/actions
+[git]: https://github.com/triptixx/rtorrent/tree/master
+[actions]: https://github.com/triptixx/rtorrent/actions/workflows/main.yml
 
 # [loxoo/rtorrent][hub]
-[![Layers](https://images.microbadger.com/badges/image/loxoo/rtorrent.svg)][mbdg]
-[![Latest Version](https://images.microbadger.com/badges/version/loxoo/rtorrent.svg)][hub]
-[![Git Commit](https://images.microbadger.com/badges/commit/loxoo/rtorrent.svg)][git]
+[![Git Commit](https://img.shields.io/github/last-commit/triptixx/rtorrent/master)][git]
+[![Build Status](https://github.com/triptixx/rtorrent/actions/workflows/main.yml/badge.svg?branch=master)][actions]
+[![Latest Version](https://img.shields.io/docker/v/loxoo/rtorrent/latest)][hub]
+[![Size](https://img.shields.io/docker/image-size/loxoo/rtorrent/latest)][hub]
 [![Docker Stars](https://img.shields.io/docker/stars/loxoo/rtorrent.svg)][hub]
 [![Docker Pulls](https://img.shields.io/docker/pulls/loxoo/rtorrent.svg)][hub]
-[![Build Status](https://github.com/triptixx/rtorrent/workflows/docker%20build/badge.svg)][actions]
 
 ## Usage
 

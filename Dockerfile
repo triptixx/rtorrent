@@ -1,5 +1,5 @@
-ARG ALPINE_TAG=3.15
-ARG XMLRPC_VER=1.54.05
+ARG ALPINE_TAG=3.18
+ARG XMLRPC_VER=1.54.06
 ARG LIBTORRENT_VER=0.13.8
 ARG RTORRENT_VER=0.9.8
 
@@ -20,7 +20,7 @@ RUN apk add --no-cache build-base openssl-dev curl-dev; \
                 --disable-cgi-server \
                 --disable-libwww-client \
                 --disable-wininet-client; \
-    make; \
+    make -j$(nproc); \
     make install DESTDIR=/output
 
 # install libtorrent
@@ -31,7 +31,7 @@ RUN apk add --no-cache git automake autoconf libtool zlib-dev linux-headers; \
     ./configure --prefix=/libtorrent \
                 --disable-debug \
                 --disable-instrumentation; \
-    make; \
+    make -j$(nproc); \
     make install DESTDIR=/output
 
 # install rtorrent
@@ -43,7 +43,7 @@ RUN apk add --no-cache ncurses-dev; \
     ./configure --prefix=/rtorrent \
                 --disable-debug \
                 --with-xmlrpc-c=/xmlrpc/bin/xmlrpc-c-config; \
-    make; \
+    make -j$(nproc); \
     make install DESTDIR=/output; \
     find /output -exec sh -c 'file "{}" | grep -q ELF && strip --strip-debug "{}"' \;
 
